@@ -1,0 +1,77 @@
+#!/bin/bash
+
+# Author : Gilbert Co. Douti
+# Date   : 02/2022
+
+echo " installation and configuration of SonarQube"
+
+sleep 5
+
+echo "Sonarqube doesn't  work when you start it as root user"
+
+sleep 2
+
+echo "Please proceed as regular user if not so yet"
+
+echo "please wait while we proceed"
+
+sleep 5
+
+sudo yum update -y
+sudo yum install java-11-openjdk-devel -y
+sudo yum install java-11-openjdk -y
+
+sleep 5
+
+echo "Downloading SonarQube latest versions on your server, please patience"
+
+sleep 2
+
+cd /opt
+sudo yum install wget -y
+sudo wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.3.0.51899.zip
+
+
+echo " Please wait while extracting packages"
+
+sleep 5
+
+sudo yum install unzip -y
+sudo unzip /opt/sonarqube-9.3.0.51899.zip
+
+echo "Wait while changing ownership to the user and Switching to Linux binaries directory to start service"
+
+sleep 5
+
+sudo chown -R vagrant:vagrant /opt/sonarqube-9.3.0.51899
+cd /opt/sonarqube-9.3.0.51899/bin/linux-x86-64
+./sonar.sh start
+
+echo "Please Wait while connecting to SonaQube"
+
+sleep 5
+
+sudo firewall-cmd --permanent --add-port=9000/tcp
+sudo firewall-cmd --reload
+
+sleep 4
+
+sudo yum install net-tools -y
+
+sleep 4
+
+echo "displaying your ip address"
+
+sleep 5
+
+sudo ifconfig
+
+echo "Installation and configuration complete"
+sleep 4
+echo "copy the ip address next to inet on eth1, then open a google browser"
+sleep 4
+echo "Paste it in it then refrech the browser"
+sleep 4
+echo "Please login as user: admin ; password: admin"
+sleep 4
+echo "THANK!!!"
